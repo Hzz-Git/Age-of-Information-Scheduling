@@ -1,0 +1,60 @@
+# Proposal v5 default configuration (Table 2)
+# N=10 sources, K=10 blocks, M=3 concurrent, T=10000 slots
+
+simulation:
+  num_sources: 10
+  total_budget: 10
+  max_concurrent: 3
+  T: 10000
+  D_max: 20
+  Delta_th: 10.0
+  Q_guard: 20.0
+  T_cool: 50
+  seed: 42
+
+sources:
+  # Heterogeneous: nominal lambda=0.5, alpha=0.6 with variations
+  - { lambda_i: 0.50, alpha_i: 0.60, aoi_weight: 1.0 }
+  - { lambda_i: 0.55, alpha_i: 0.50, aoi_weight: 1.5 }
+  - { lambda_i: 0.45, alpha_i: 0.70, aoi_weight: 0.8 }
+  - { lambda_i: 0.60, alpha_i: 0.55, aoi_weight: 1.2 }
+  - { lambda_i: 0.40, alpha_i: 0.65, aoi_weight: 1.0 }
+  - { lambda_i: 0.50, alpha_i: 0.60, aoi_weight: 1.3 }
+  - { lambda_i: 0.55, alpha_i: 0.45, aoi_weight: 0.9 }
+  - { lambda_i: 0.45, alpha_i: 0.75, aoi_weight: 1.1 }
+  - { lambda_i: 0.60, alpha_i: 0.50, aoi_weight: 1.4 }
+  - { lambda_i: 0.50, alpha_i: 0.60, aoi_weight: 1.0 }
+
+oracle:
+  H: 5
+  V_aoi: 1.0
+  gamma: 0.01
+
+training:
+  epochs: 100
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  hidden: [128, 64]
+  dataset_T: 10000
+  K_pert: 5
+
+certificate:
+  eta: 0.1
+  B: 5.0
+  delta: 0.05
+  C0_multiplier: 2.0
+
+fallback:
+  Q_guard: 20.0
+  T_cool: 50
+
+# Sweep parameters (section 5.3)
+sweeps:
+  K_values: [5, 8, 10, 12, 15]
+  alpha_scales: [0.3, 0.5, 0.6, 0.8, 1.0]
+  H_values: [1, 3, 5, 7, 10]
+  N_values: [5, 10, 15, 20]
+  rho_values: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+  shift_types: [arrival_burst, channel_degrade, load_spike]
+  num_seeds: 10
